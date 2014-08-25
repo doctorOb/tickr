@@ -1,0 +1,62 @@
+2013
+12/31/13	2012
+12/31/12	2011
+12/31/11	2010
+12/31/10
+Cash	4,704	4,988	4,661	4,598
+Short Term Investments	903	1,322	1,176	1,757
+ASSETS
+Cash & Short Term Investments	5,607	6,310	5,837	6,355
+Receivables - Net	1,253	1,302	1,082	973
+Raw Materials	311	271	464	323
+Work in Progress	234	168	199	207
+Finished Goods	486	392	312	208
+Progress Payments Other	239	220	0	0
+Inventories - Total	1,270	1,051	975	738
+Prepaid Expenses	--	--	--	--
+Other Current Assets	761	1,032	783	793
+CURRENT ASSETS - TOTAL	8,891	9,695	8,677	8,859
+Land	121	112	113	105
+Buildings	4,175	4,324	3,957	3,692
+Machinery & Equipment	12,286	12,571	11,886	10,744
+Property, Plant and Equipment - Gross	17,666	18,277	17,875	15,363
+Accumulated Depreciation	(7,865)	(7,652)	(7,204)	(6,420)
+Property, Plant and Equipment - Net	9,801	10,625	10,671	8,943
+Investments in Associated Companies	5,519	4,912	4,723	4,369
+Other Investments	108	3	3	3
+Other Tangible Assets	383	301	196	153
+Total Intangible Other Assets - Net	1,542	1,496	926	716
+Other Assets - Total	4,159	4,140	3,774	3,659
+TOTAL ASSETS	26,244	27,032	25,196	23,043
+LIABILITIES
+Accounts Payable	771	779	977	798
+Short Term Debt & Current Portion of Long Term Debt	21	76	27	57
+Accrued Payroll	445	460	373	458
+Income Taxes Payable	139	282	288	181
+Other Current Liabilities	370	359	432	492
+CURRENT LIABILITIES - TOTAL	1,746	1,956	2,097	1,986
+Capitalized Lease Obligations	405	--	--	--
+Long Term Debt	3,677	3,382	2,364	2,262
+Provision for Risks and Charges	1,456	1,601	897	913
+Deferred Taxes - Debit	2,234	2,343	2,652	2,790
+DEFERRED TAXES	(2,234)	(2,343)	(2,652)	(2,790)
+Other Liabilities	388	903	1,361	1,246
+TOTAL LIABILITIES	5,033	5,499	4,067	3,617
+EQUITY
+Non-Equity Reserves	0	0	0	0
+Minority Interest	49	47	51	51
+Preferred Stock	0	0	0	0
+Common Stock	831	825	818	813
+Capital Surplus	13,066	13,146	13,041	12,865
+Other Appropriated Reserves	(428)	(820)	(1,384)	(1,275)
+Retained Earnings	11,320	9,932	9,332	6,881
+Unrealized Foreign Exchange Gain/Loss	492	1,174	1,324	1,374
+Unrealized Gain/Loss on Marketable Securities	(20)	2	(29)	(56)
+Treasury Stock	(4,099)	(2,773)	(2,024)	(1,227)
+COMMON EQUITY	21,162	21,486	21,078	19,375
+TOTAL LIABILITIES & SHAREHOLDERS’ EQUITY	26,244	27,032	25,196	23,043
+SHARE INFORMATION
+Common Shares Outstanding	1,399	1,470	1,515	1,561
+() = Negative Values
+In U.S. Dollars
+Values are displayed in Millions except for earnings per share and where noted
