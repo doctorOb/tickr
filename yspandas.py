@@ -11,7 +11,10 @@ def get5yr_summary(symbol):
     start = "2009-01-01"
     end = "2014-08-20"
     raw = ys.get_historical_prices(symbol, start, end)
-    return pd.DataFrame(raw.values(), index=raw.keys())
+    df = pd.DataFrame(raw.values(), index=raw.keys())
+    df.index = pd.to_datetime(df.index) #convert the index to date types
+    cols = df.columns.get_values()
+    return df[cols[1:]].astype(float) #convert the reset to floats
 
 
 def serialize_5yr_summary(symbol):
