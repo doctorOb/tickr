@@ -36,7 +36,10 @@ class DBA():
 
 	def fetch(self, table):
 		"""read a table into a pandas dataframe."""
-		return pdsql.read_sql("SELECT * FROM {}".format(table), self.con)
+		try:
+			return pdsql.read_sql("SELECT * FROM {}".format(table), self.con)
+		except:
+			return None
 
 
 ## result = df.sort(['A', 'B'], ascending=[1, 0])
