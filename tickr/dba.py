@@ -10,10 +10,19 @@ import sys
 
 
 #from the command line 'mysql -h 192.168.1.14 -u remote --password=whitey11'
-class DBA():
+class DBA(object):
+
+	_instance = None
+
+	#Ensure singleton behavior
+	def __new__(cls, *args, **kwargs):
+		if not cls._instance:
+			cls._instance = super(DBA, cls).__new__(cls, *args, **kwargs)
+		return cls._instance
 
 	def __init__(self):
 		self.con = None
+		self._cache = dict()
 
 	def connect(self):
 		"""initiate a connection with the DB. This must be called manually"""
@@ -34,12 +43,15 @@ class DBA():
 		to be smart about this and not write misformed frames"""
 		dframe.to_sql(name=table, con=self.con, if_exists=if_exists, flavor='mysql')
 
-	def fetch(self, table):
+	def fetch(self, table, fresh=False):
 		"""read a table into a pandas dataframe."""
-		try:
-			return pdsql.read_sql("SELECT * FROM {}".format(table), self.con)
-		except:
-			return None
+		if table in self._cache.keys() and not fresh:
+			return self._cache[table]
+		else:
+			try:
+				return pdsql.read_sql("SELECT * FROM {}".format(table), self.con)
+			except:
+				return None
 
 
 ## result = df.sort(['A', 'B'], ascending=[1, 0])
