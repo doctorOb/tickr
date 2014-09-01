@@ -1,17 +1,20 @@
 import ystockquote as stock
 import ticker as ticker
 import datetime
+import dba
+
+
 
 class Ticker:
 	"""For information of function output, run as main"""
 	def __init__(self,symbol):
-		self.symbol=symbol
-		self.info={}
-		a=ticker.stock.get_all(str(symbol))
-		for key in a:
-			new_key=key.replace("_"," ")
-			self.info[new_key]=a[key]
-		self.history(years_ago=0,months_ago=1,days_ago=0)
+		self.symbol=symbol.upper()
+		d=dba.DBA()
+		d.connect()
+		self.frame=d.fetch(self.symbol).sort(columns="index")
+	print self.frame[-1:]
+
+
 	def history(self,years_ago=0,months_ago=0,days_ago=0,date="yyyy-mm-dd"):
 		if date!="yyyy-mm-dd":
 			start=date
