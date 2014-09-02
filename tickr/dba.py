@@ -43,7 +43,7 @@ class DBA(object):
 		to be smart about this and not write misformed frames"""
 		dframe.to_sql(name=table, con=self.con, if_exists=if_exists, flavor='mysql')
 
-	def fetch(self, table, fresh=False):
+	def fetch(self, table, cache=False):
 		"""read a table into a pandas dataframe."""
 		if table in self._cache.keys() and not fresh:
 			return self._cache[table]
