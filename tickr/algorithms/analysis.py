@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import sys
 
 
 class AbstractAlgorithm():
@@ -26,7 +25,7 @@ class AbstractAlgorithm():
 	def process(self):
 		if self.ticker:
 			self._process_ticker()
-		elif self.frame:
+		elif self.frame is not None:
 			self._process_frame()
 		elif len(self.ticker_set) > 0:
 			self._process_set()
@@ -43,6 +42,7 @@ class GRatio(AbstractAlgorithm):
 		pass
 
 	def _process_frame(self):
+		print "frame called"
 		self.frame['Change'] = self.frame.Open - self.frame.Close
 		red_days = self.frame[self.frame.Change < 0]
 		green_days = self.frame[self.frame.Change >= 0]
@@ -52,13 +52,18 @@ class GRatio(AbstractAlgorithm):
 
 	def process(self):
 		#pre process
-
-		super.process(self)
-
+		AbstractAlgorithm.process(self)
 		#post process
 
 
-def _GRatio(frame):
-	gr = GRatio(frame=)
-	sys.modules['pandas'].DataFrame.GRatio = GRatio()
+
+#bind the algorithm to the pandas DataFrame so that it can be called like 'frame.AnalysisAlg()'
+pd.DataFrame.GRatio = lambda frame: GRatio(frame=frame).process()
+
+
+
+if __name__ == '__main__':
+	df = pd.DataFrame([1,2,3])
+	df.GRatio()
+
 
