@@ -12,7 +12,6 @@ class Ticker:
 		d=dba.DBA()
 		d.connect()
 		self.frame=d.fetch(self.symbol).sort(columns="index")
-	print self.frame[-1:]
 
 
 	def history(self,years_ago=0,months_ago=0,days_ago=0,date="yyyy-mm-dd"):
