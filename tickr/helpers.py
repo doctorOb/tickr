@@ -17,7 +17,11 @@ class Utils(object):
 		return cls._instance
 
 	def __init__(self):
-		self.foo = 'bar'
+		try:
+			open("data/company_lists/NYSE.csv")
+			self.dpath = "data/company_lists"
+		except:
+			self.dpath = "tickr/data/company_lists"
 
 	def as_float(self, dataframe):
 		"""convert a raw string dataframe to a float. Assumes the first column is to be ignored"""
@@ -29,7 +33,11 @@ class Utils(object):
 		case it will be returned as a datetime date object"""
 		return dt.date.today() if as_date else str(dt.date.today())
 
-	def parse_sector_csv(self, sector_file):
+	def yesterday(self, as_date=False):
+		yd = datetime.date.fromordinal(datetime.date.today().toordinal()-1)
+		return yd if as_date else str(yd)
+
+	def parse_sector_csv(self, exchange_csv):
 		"""
 		format is:
 			symbol, name, lastSale, MarketCap, ADR TSO, IPOyear
@@ -37,8 +45,8 @@ class Utils(object):
 
 		We're concerned with symbol (0), sector (6), and industry (7)
 		"""
-		sector = sector_file.split('/')[-1].strip('.csv')
-		with open(sector_file, 'r') as f:
+		sector = exchange_csv.split('/')[-1].strip('.csv')
+		with open(exchange_csv, 'r') as f:
 			reader = csv.reader(f, delimiter=',')
 			data={}
 			reader.next() #skip the first line (row info)
@@ -54,10 +62,30 @@ class Utils(object):
 				}
 			return data
 
-	def get_historical_summary(self, symbol, start="2009-01-01", end=None):
+	def get_historical_summary(self, symbol, start="2000-01-01", end=None):
 		"""get the past 5 years ticker data for symbol, and return it as a DataFrame
 		indexed by date, with values as float"""
 
 		raw = ys.get_historical_prices(symbol, start, end or self.today())
 		return self.as_float(pd.DataFrame(raw.values(), index=pd.to_datetime(raw.keys())))
+
+	def get_company_list(self):
+		"""get the list of all "operating companies" from our CSV file. 
+		Here, an 'Operating company' is any company that we successfully pulled
+		historical ticker data for. Indexes and ETFs are examples of ticker symbols
+		which would not be included in this list"""
+		with open('{}/all_valids.csv'.format(self.dpath), 'r') as f:
+			return [sym for sym in csv.reader(f, delimiter=',')][0]
+
+	def get_yahoo_summary(self, symbol):
+		raw = ys.get_all(symbol)
+		
+
+	def calculate_change(self, dframe):
+		dframe['Raw_Change'] = dframe['Close'] - dframe['Open']
+		dframe['Percent_Change'] = (dframe['Close'] - dframe['Open']) / dframe['Open']
+		return dframe
+
+
+
 
