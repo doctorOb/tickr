@@ -2,6 +2,7 @@ import dompy
 import mechanize
 import cookielib
 import ystockquote
+import urllib2
 
 
 
@@ -69,28 +70,40 @@ class Crawler:
 class CNBC_Statement:
 
 	def __init__(self, symbol):
+		self.urlroot = "http://apps.cnbc.com/view.asp?uid=stocks/financials&view=balanceSheet&symbol="
 		self.symbol = symbol
 		self.setup()
 		
 	def setup(self):
 		"""read the page from the file system, return as string"""
 		try:
-			html = open('earnings/{}.html'.format(self.symbol), 'r').read()
+			html = urllib2.urlopen(self.urlroot + self.symbol).read()
 		except:
-			raise IOError
+			raise
 
 		self.document = dompy.Document(html)
+
+	def parseMultiplier(self, text):
+		if "thousands" in text:
+			return 1000.0
+		elif "millions" in text:
+			return 1000000.0
+		elif "billions" in text:
+			return 1000000000.0
+		else:
+			return 1.0
 
 	def parseTR(self, tr):
 		label = tr.children[0].innerText.upper()
 		values = []
 		for valForYear in tr.children[1:]:
 			val = valForYear.innerText.replace(",","")
-			if "(" in val: #negative
-				val = float(val.strip("(").strip(")"))*-1.0
-			else:
-				val = float(val)
+			try:
+				val = float(val.strip("(").strip(")"))*-1.0 if "(" in val else float(val)
+			except ValueError:
+				val = None #no entry for cell
 			values.append(val)
+
 		return label, values
 
 	def parseYearlyIncome(self):
@@ -106,10 +119,10 @@ class CNBC_Statement:
 		#get the total values on the income statement
 		#we'll worry about specifics (amoritizaiton ect) later
 		totalTds = rowContainer.getElementsByClassName('total')
-
+		multiplier = self.parseMultiplier(yrTbl.parentNode.innerText[-150:].lower())
 		for td in totalTds:
 			key, vals = self.parseTR(td)
-			ret[key] = vals
+			ret[key] = map(lambda x: x * multiplier if x is not None else x, vals)
 
 		return ret
 
